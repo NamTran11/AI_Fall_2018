@@ -95,13 +95,57 @@ def generate_next_Board_states(current_state,element_stat,current_player):
     return list_next_Board_states
     # có nên cho thêm cái [(x_old,y_old),(x_new,y_new)] hay không
 
-def generate_state_tree(current_state,current_player):
-    l = generate_list_element_CanMove(board_copy(current_state),current_player)
-    for state in l:
-        for board in generate_next_Board_states(board_copy(current_state),state,current_player):
-            board_print(board[1],board[0])
-        print("********************************************************")
-generate_state_tree(Test_Board,'b')
+def generate_state_tree(current_state,current_player,competitor):
+    # mac dinh cay se co 3 lớp 
+    i = 0
+    l1 = generate_list_element_CanMove(board_copy(current_state),current_player)
+
+    # travel first layer
+    for l_e1 in l1:
+        i+=1
+        states_F1 = generate_next_Board_states(board_copy(current_state),l_e1,current_player)
+        for s2 in states_F1:
+            i+=1
+            # receive the value of child-branch , decide wherther or not cutting this branch
+            #board_print(s2[1],s2[0])
+            
+            # do Somthing on this First Layer
+            
+            # check conditon anpha-beta to continue (cut this branch)
+            # travel second layer
+            l2 = generate_list_element_CanMove(board_copy(s2[1]),competitor)
+            for l_e2 in l2:
+                i+=1
+                states_F2 = generate_next_Board_states(board_copy(s2[1]),l_e2,competitor)
+                # do Somthing on this Second Layer
+                # check conditon anpha-beta to continue (cut this branch)
+                # travel Third layer
+                for s3 in states_F2:
+                    i+=1
+                    # Using cost-function to evaluate this states and return result to layer above
+
+                    #board_print(s3[1],s3[0])
+                    
+                    l3 = generate_list_element_CanMove(board_copy(s3[1]),current_player)
+                    for l_e3 in l3:
+                        i+=1
+                        states_F3 = generate_next_Board_states(board_copy(s3[1]),l_e3,current_player)
+                        # do Somthing on this Third Layer
+                        
+                        # check conditon anpha-beta to continue (cut this branch)
+                        
+                        # dosomthing on this Layer
+                        for s4 in states_F3:
+                            i+=1
+                            pass
+                            # Using cost-function to evaluate this states and return result to layer above
+
+                            #board_print(s4[1],s4[0])
+    print(i)
+
+
+
+generate_state_tree(Test_Board,'b','r')
 #generate_next_Board_states(Initial_Board,[(0,2) ,(1, 1), (1, 2), (1, 3)],'b')
 #print(generate_list_element_CanMove(Initial_Board,'b'))
 
