@@ -1,5 +1,6 @@
 
 # ======================== Class Player =======================================
+
 class Player:
     # student do not allow to change two first functions
     def __init__(self, str_name):
