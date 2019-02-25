@@ -1,1 +1,1 @@
-# AI_Fall_2018
+# AI_MiniMax_algorithm
